@@ -10,7 +10,7 @@ class Negociacao {
     get data() {
         return new Date(this._data.getTime()); // 'Programação Defensiva' - Conceito para evitar alteração da propriedade do Objeto.
     }
-    
+
     get quantidade() {
         return this._quantidade;
     }
