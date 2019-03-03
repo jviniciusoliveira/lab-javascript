@@ -1,18 +1,15 @@
 class ListaNegociacoes {
 
-    constructor(funcaoUpdate) {
+    constructor() {
         this._negociacoes = [];
-        this._funcaoUpdate = funcaoUpdate;
     }
 
     adiciona(negociacao) {
         this._negociacoes.push(negociacao);
-        this._funcaoUpdate();
     }
 
-    removeLista() {
+    remove() {
         this._negociacoes = [];
-        this._funcaoUpdate();
     }
 
     get negociacoes() {
