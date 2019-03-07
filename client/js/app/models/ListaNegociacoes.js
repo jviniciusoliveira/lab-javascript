@@ -18,5 +18,9 @@ class ListaNegociacoes {
          * Retorna um Novo array ao invés do array original.
          * 'Programação Defensiva' - Conceito para evitar alteração da propriedade do Objeto.
          */  
-    } 
+    }
+    
+    get volumeTotal() {
+        return this._negociacoes.reduce((total, n) => total + n.volume, 0.0);
+    }
 }
