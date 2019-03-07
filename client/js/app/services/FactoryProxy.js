@@ -8,8 +8,9 @@ class FactoryProxy {
                 
                 if (props.includes(prop) && typeof(target[prop]) == typeof(Function)) {
                     return function() {
-                        Reflect.apply(target[prop], target, arguments);
+                        let retorno = Reflect.apply(target[prop], target, arguments);
                         action(target);
+                        return retorno;
                     }     
                 }
                     
@@ -18,12 +19,11 @@ class FactoryProxy {
 
             set(target, prop, value, receiver) {
                 
+                let retorno = Reflect.set(target, prop, value, receiver);
                 if (props.includes(prop)) {
-                    target[prop] = value;
                     action(target);
                 }
-
-                return Reflect.set(target, prop, value, receiver);
+                return retorno;
             }
        });
     }

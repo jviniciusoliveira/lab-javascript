@@ -1,6 +1,6 @@
 class Bind {
 
-    constructor(model, props, view) {
+    constructor(model, view, ...props) {
 
         let proxyFactory = FactoryProxy.create(model, props, model => 
             view.update(model));
