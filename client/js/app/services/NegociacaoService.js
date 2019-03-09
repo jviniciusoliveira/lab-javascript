@@ -34,4 +34,17 @@ class NegociacaoService {
                     throw new Error('Falha na importação.');
                 });
     }
+
+    obterNegociacoes() {
+
+        return Promise.all([
+            this.obterNegociacoesSemana(),
+            this.obterNegociacoesSemanaAnterior(),
+            this.obterNegociacoesSemanaRetrasada()
+        ])
+        .then(arrayNegociacoes => {
+            return arrayNegociacoes.reduce((negociacoes, arrayNegociacoes) => negociacoes.concat(arrayNegociacoes), []);
+        })
+        .catch(erro => { throw new Error(erro) });
+    }
 }
