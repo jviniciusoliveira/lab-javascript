@@ -5,10 +5,11 @@ class NegociacaoController {
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
+        this._ordemAtual = '';
 
         this._listaNegociacoes = new Bind(new ListaNegociacoes(), 
             new NegociacoesView($('#negociacoes-view')),
-            'adiciona', 'remove');
+            'adiciona', 'remove', 'ordena', 'inverteOrdena');
         
         this._mensagem = new Bind(new Mensagem(),
             new MensagemView($('#mensagem')),
@@ -41,6 +42,16 @@ class NegociacaoController {
                 console.log(erro);
                 this._mensagem.texto = 'Falha na importação'
             });  
+    }
+
+    ordena(coluna) {
+        
+        if (this._ordemAtual == coluna) {
+            this._listaNegociacoes.inverteOrdena();    
+        } else {
+            this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);
+        }
+        this._ordemAtual = coluna;
     }
 
     _criaNegociacao() {
