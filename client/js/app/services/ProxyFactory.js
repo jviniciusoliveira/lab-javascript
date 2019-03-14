@@ -1,4 +1,4 @@
-class FactoryProxy {
+class ProxyFactory {
 
     static create(object, props, action) {
 
