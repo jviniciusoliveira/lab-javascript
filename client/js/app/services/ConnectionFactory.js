@@ -2,7 +2,7 @@ var ConnectionFactory = (function() {
     
     const stores = ['negociacoes'];
     const dbName = 'baseteste';
-    const dbVersion = 3;
+    const dbVersion = 1;
     
     var connection = null;
     var close = null;
@@ -26,7 +26,7 @@ var ConnectionFactory = (function() {
                         connection = e.target.result;
                         close = connection.close.bind(connection);
                         connection.close = () => {
-                            throw new Error('Não possível fechar diretamente a conexão.');
+                            throw new Error('Não é possível fechar diretamente a conexão.');
                         }
                     }
                     resolve(connection);

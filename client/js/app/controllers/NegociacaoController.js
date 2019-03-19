@@ -13,13 +13,22 @@ class NegociacaoController {
         
         this._mensagem = new Bind(new Mensagem(),
             new MensagemView($('#mensagem')),
-            'texto');   
+            'texto'); 
+            
+        ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.listaTodos())
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao))
+            })
+            .catch(erro => this._mensagem = erro);
     }
 
     adiciona(event) {
         event.preventDefault();
 
         let connection = ConnectionFactory.getConnection();
+        console.log(connection);
         let negociacao = this._criaNegociacao();
 
         connection.then((connection) => {
@@ -39,8 +48,17 @@ class NegociacaoController {
     }
 
     remove() {
-        this._listaNegociacoes.remove();
-        this._mensagem.texto = 'Negociações apagadas com sucesso!';
+        ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.apagaTodos())
+            .then(msg => {
+                this._listaNegociacoes.remove();
+                this._mensagem.texto = msg;
+            }).catch(msg => {
+                this._mensagem.texto = msg;
+            });
+
+        
     }
 
     importaNegociacoes() {
